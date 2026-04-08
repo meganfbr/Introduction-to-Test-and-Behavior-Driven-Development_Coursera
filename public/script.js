@@ -1,10 +1,21 @@
 const API = "http://localhost:3000/products";
 
 async function loadProducts() {
-  const search = document.getElementById("search").value;
+  const name = document.getElementById("search-name")?.value || "";
+  const category = document.getElementById("search-category")?.value || "";
+  const available = document.getElementById("search-available")?.value || "";
 
-  let url = API;
-  if (search) url += "?name=" + search;
+  let url = API + "?";
+  let params = new URLSearchParams();
+  if (name) params.append("name", name);
+  if (category) params.append("category", category);
+  if (available !== "") params.append("available", available);
+  
+  if (params.toString()) {
+    url += params.toString();
+  } else {
+    url = API;
+  }
 
   const res = await fetch(url);
   const data = await res.json();
@@ -107,3 +118,10 @@ async function deleteProduct(id) {
 
 // auto load
 loadProducts();
+
+function clearSearch() {
+  if (document.getElementById("search-name")) document.getElementById("search-name").value = "";
+  if (document.getElementById("search-category")) document.getElementById("search-category").value = "";
+  if (document.getElementById("search-available")) document.getElementById("search-available").value = "";
+  loadProducts();
+}

@@ -90,9 +90,36 @@
         <section class="card">
             <div class="card-title">
                 <h2>Product Roster</h2>
-                <div class="search-box">
-                    <input type="text" id="search" placeholder="Search products..." onkeyup="loadProducts()">
+            </div>
+            <div class="form-row" style="margin-bottom: 1rem; background: #f9fafb; padding: 1rem; border-radius: 8px;">
+                <div class="input-group">
+                    <label for="search-name">Name</label>
+                    <input type="text" id="search-name" placeholder="Search by name...">
                 </div>
+                <div class="input-group">
+                    <label for="search-category">Category</label>
+                    <select id="search-category">
+                        <option value="">All Categories</option>
+                        <option value="Writing">Writing</option>
+                        <option value="Paper">Paper</option>
+                        <option value="Electronics">Electronics</option>
+                        <option value="Accessories">Accessories</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label for="search-available">Availability</label>
+                    <select id="search-available">
+                        <option value="">Any</option>
+                        <option value="true">Available</option>
+                        <option value="false">Out of Stock</option>
+                    </select>
+                </div>
+                <button class="btn-primary" onclick="loadProducts()" id="search-btn">
+                    Search
+                </button>
+                <button class="btn-primary" style="background: #6b7280;" onclick="clearSearch()" id="clear-btn">
+                    Clear
+                </button>
             </div>
 
             <div style="overflow-x: auto;">

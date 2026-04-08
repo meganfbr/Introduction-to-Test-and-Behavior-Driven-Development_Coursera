@@ -8,30 +8,88 @@ Feature: Univ Stationery Product Management
       | Scientific Calculator | Electronics  | true      |
       | Premium Backpack      | Accessories  | false     |
 
-  Scenario: List All
-    When I request all stationery products
-    Then I should see a list containing 4 products
+  Scenario: Read a Product
+    When I visit the "Home Page"
+    And I set the "Name" to "Scientific Calculator"
+    And I press the "Search" button
+    Then I should see the message "Success"
+    And I should see "Scientific Calculator" in the "Name" field
+    And I should see "Electronics" in the "Category" field
+    And I should see "true" in the "Available" dropdown
 
-  Scenario: Search by Name
-    When I search stationery by name "Blue Pen"
-    Then I should find exactly 1 product named "Blue Pen"
+  Scenario: Update a Product
+    When I visit the "Home Page"
+    And I set the "Name" to "Blue Pen"
+    And I press the "Search" button
+    Then I should see the message "Success"
+    And I should see "Writing" in the "Category" field
+    When I change "Category" to "Office"
+    And I press the "Update" button
+    Then I should see the message "Success"
+    When I copy the "Id" field
+    And I press the "Clear" button
+    And I paste the "Id" field
+    And I press the "Retrieve" button
+    Then I should see the message "Success"
+    And I should see "Office" in the "Category" field
+    When I press the "Clear" button
+    And I press the "Search" button
+    Then I should see "Office" in the results
 
-  Scenario: Search by Category
-    When I search stationery by category "Paper"
-    Then I should find exactly 1 product in the "Paper" category
+  Scenario: Delete a Product
+    When I visit the "Home Page"
+    And I set the "Name" to "College Notebook"
+    And I press the "Search" button
+    Then I should see the message "Success"
+    And I should see "Paper" in the "Category" field
+    When I copy the "Id" field
+    And I press the "Clear" button
+    And I paste the "Id" field
+    And I press the "Delete" button
+    Then I should see the message "Product has been Deleted!"
+    When I press the "Clear" button
+    And I press the "Search" button
+    Then I should not see "College Notebook" in the results
 
-  Scenario: Search by Availability
-    When I search stationery by availability "false"
-    Then I should find exactly 1 unavailable product
+  Scenario: List All Products
+    When I visit the "Home Page"
+    And I press the "Clear" button
+    And I press the "Search" button
+    Then I should see the message "Success"
+    And I should see "Blue Pen" in the results
+    And I should see "College Notebook" in the results
+    And I should see "Scientific Calculator" in the results
+    And I should see "Premium Backpack" in the results
 
-  Scenario: Read
-    When I request a stationery product named "Scientific Calculator"
-    Then I should see the product details with name "Scientific Calculator"
+  Scenario: Search for a Product by Category
+    When I visit the "Home Page"
+    And I press the "Clear" button
+    And I select "Paper" in the "Category" dropdown
+    And I press the "Search" button
+    Then I should see the message "Success"
+    And I should see "College Notebook" in the results
+    And I should not see "Blue Pen" in the results
+    And I should not see "Scientific Calculator" in the results
+    And I should not see "Premium Backpack" in the results
 
-  Scenario: Update
-    When I update the available status to "true" for stationery named "Premium Backpack"
-    Then the product named "Premium Backpack" should have availability "true"
+  Scenario: Search for a Product by Name
+    When I visit the "Home Page"
+    And I press the "Clear" button
+    And I set the "Name" to "Blue Pen"
+    And I press the "Search" button
+    Then I should see the message "Success"
+    And I should see "Blue Pen" in the results
+    And I should not see "College Notebook" in the results
+    And I should not see "Scientific Calculator" in the results
+    And I should not see "Premium Backpack" in the results
 
-  Scenario: Delete
-    When I delete the stationery named "College Notebook"
-    Then I should not find "College Notebook" in the list of products
+  Scenario: Search for a Product by Availability
+    When I visit the "Home Page"
+    And I press the "Clear" button
+    And I select "True" in the "Available" dropdown
+    And I press the "Search" button
+    Then I should see the message "Success"
+    And I should see "Blue Pen" in the results
+    And I should see "College Notebook" in the results
+    And I should see "Scientific Calculator" in the results
+    And I should not see "Premium Backpack" in the results

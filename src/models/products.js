@@ -1,4 +1,9 @@
-const products = [];
+const products = [
+  { id: "1", name: "Blue Pen", category: "Writing", available: true },
+  { id: "2", name: "College Notebook", category: "Paper", available: true },
+  { id: "3", name: "Scientific Calculator", category: "Electronics", available: true },
+  { id: "4", name: "Premium Backpack", category: "Accessories", available: false }
+];
 
 function create(product) {
   products.push(product);
@@ -25,11 +30,13 @@ function list() {
 }
 
 function findByName(name) {
-  return products.filter(p => p.name === name);
+  if (!name) return products;
+  return products.filter(p => p.name.toLowerCase().includes(name.toLowerCase()));
 }
 
 function findByCategory(category) {
-  return products.filter(p => p.category === category);
+  if (!category) return products;
+  return products.filter(p => p.category.toLowerCase().includes(category.toLowerCase()));
 }
 
 function findByAvailability(avail) {
